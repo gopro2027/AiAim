@@ -28,7 +28,7 @@ while(cap.isOpened()):
         # but we want it as RGB We'll 
         # also need a grayscale version
         img_gray = cv2.cvtColor(frame, cv2.COLOR_BGR2GRAY)
-        img_rgb = cv2.cvtColor(frame, cv2.COLOR_BGR2RGB)
+        img_rgb = frame.copy() #cv2.cvtColor(frame, cv2.COLOR_BGR2RGB)
   
         found = stop_data.detectMultiScale(img_gray, 
                                    minSize =(20, 20))
@@ -51,7 +51,7 @@ while(cap.isOpened()):
 
         cv2.imshow('Unprocessed', img_rgb)
 
-        key = cv2.waitKey(1)
+        key = cv2.waitKey(240)
         if (key == ord('q')):
             break
 
