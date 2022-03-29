@@ -55,7 +55,7 @@ while(cap.isOpened()):
             lastLoc = 'img/positive/{}/{}.jpg'.format(video_name,frameCount)
             cv.imwrite(lastLoc, frame)
         elif key == ord('d'):
-            lastLoc = 'img/negative/{}.jpg'.format(frameCount)
+            lastLoc = 'img/negative/{}-{}.jpg'.format(video_name,frameCount)
             cv.imwrite(lastLoc, frame)
         elif key == ord('u'):
             os.remove(lastLoc)
