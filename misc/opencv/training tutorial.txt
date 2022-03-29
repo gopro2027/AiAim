@@ -1,0 +1,7 @@
+https://www.youtube.com/watch?v=XrCAvs9AePM&ab_channel=LearnCodeByGaming
+text version of that video: https://learncodebygaming.com/blog/training-a-cascade-classifier
+
+opencv tools: https://cfhcable.dl.sourceforge.net/project/opencvlibrary/3.4.16/opencv-3.4.16-vc14_vc15.exe
+
+
+https://dikshit18.medium.com/training-your-own-cascade-classifier-detector-opencv-9ea6055242c2
