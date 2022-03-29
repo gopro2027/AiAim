@@ -9,5 +9,6 @@ def generate_negative_description_file():
         # loop over all the filenames
         for filename in os.listdir('img/negative'):
             f.write('../../../img/negative/' + filename + '\n')
+            #os.rename('img/negative/'+filename,'img/negative/2022-03-28_22-21-55.mp4-'+filename)
 generate_negative_description_file()
 
