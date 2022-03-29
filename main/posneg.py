@@ -8,52 +8,63 @@ import os
 from time import time
 import imageio as iio
 
+frame_skip_count = 5
+frame_start = 0
+video_name = '2022-03-28_22-21-55.mp4'
 
-loop_time = time()
-program_start_time = time()
-num = 0
 lastLoc = ""
-lastLocOrig = ""
-if not os.path.exists('img/positive/'+str(program_start_time)):
-    os.mkdir('img/positive/'+str(program_start_time))
-while(True):
+if not os.path.exists('img/positive/'+str(video_name)):
+    os.mkdir('img/positive/'+str(video_name))
+if not os.path.exists('img/negative/'):
+    os.mkdir('img/negative/')
 
-    # get an updated image of the game
-    loc = "img/rand/"+str(num)+".jpg"
-    while not os.path.exists(loc):
-        num = num + 1
-        loc = "img/rand/"+str(num)+".jpg"
-    img = iio.imread(loc)
+cap = cv.VideoCapture('img/raw/'+video_name)
+if (cap.isOpened() == False):
+    print("Error opening video stream or file")
 
-    # display the images
-    cv.imshow('Unprocessed', img)
+frameCount = 0
 
-    # debug the loop rate
-    print('FPS {}'.format(1 / (time() - loop_time)))
-    loop_time = time()
+#skip some frames if you want to pick up where you left off
+for i in range(frame_start):
+    ret, frame = cap.read()
+    frameCount = frameCount + 1
 
-    # press 'q' with the output window focused to exit.
-    # press 'f' to save screenshot as a positive image,
-    # press 'd' to save as a negative image.
-    # waits 1 ms every loop to process key presses
-    key = cv.waitKey()
-    if key == ord('q'):
-        cv.destroyAllWindows()
+while(cap.isOpened()):
+    ret, frame = cap.read()
+    for i in range(frame_skip_count-1):
+        ret, frame = cap.read()
+        if ret != True:
+            break
+        frameCount = frameCount + 1
+    
+
+    if ret == True:
+
+        # display the images
+        cv.imshow('Unprocessed', frame)
+
+        # press 'q' with the output window focused to exit.
+        # press 'f' to save screenshot as a positive image,
+        # press 'd' to save as a negative image.
+        # press 'u' to delete the image saved from the last action
+        # waits 1 ms every loop to process key presses
+        key = cv.waitKey()
+        if key == ord('q'):
+            break
+        elif key == ord('f'):
+            lastLoc = 'img/positive/{}/{}.jpg'.format(video_name,frameCount)
+            cv.imwrite(lastLoc, frame)
+        elif key == ord('d'):
+            lastLoc = 'img/negative/{}.jpg'.format(frameCount)
+            cv.imwrite(lastLoc, frame)
+        elif key == ord('u'):
+            os.remove(lastLoc)
+
+    else:
+        print("no more video! Frame: "+str(frameCount))
         break
-    elif key == ord('f'):
-        #cv.imwrite('img/positive/{}.jpg'.format(num), img)
-        os.rename(loc, 'img/positive/{}/{}.jpg'.format(program_start_time,num))
-        lastLoc = 'img/positive/{}/{}.jpg'.format(program_start_time,num)
-        lastLocOrig = loc
-    elif key == ord('d'):
-        #cv.imwrite('img/negative/{}.jpg'.format(num), img)
-        os.rename(loc, 'img/negative/{}.jpg'.format(num))
-        lastLoc = 'img/negative/{}.jpg'.format(num)
-        lastLocOrig = loc
-    elif key == ord('u'):
-        os.rename(lastLoc, lastLocOrig)
-        num = num - 2
 
-    num = num + 1
+    print('Done.')
 
-print('Done.')
+cap.release()
+cv.destroyAllWindows()
