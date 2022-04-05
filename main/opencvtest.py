@@ -49,7 +49,7 @@ while(cap.isOpened()):
                       (x + height, y + width), 
                       (0, 255, 0), 1)
 
-        cv2.imshow('Unprocessed', img_rgb)
+        cv2.imshow('Unprocessed', img_rgb) 
 
         key = cv2.waitKey(240)
         if (key == ord('q')):
