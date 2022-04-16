@@ -8,9 +8,9 @@ import os
 from time import time
 import imageio as iio
 
-frame_skip_count = 5
+frame_skip_count = 2
 frame_start = 0
-video_name = '2022-03-28_22-24-34.mp4'
+video_name = '2022-03-29_10-23-19.mp4'
 
 lastLoc = ""
 if not os.path.exists('img/positive/'+str(video_name)):

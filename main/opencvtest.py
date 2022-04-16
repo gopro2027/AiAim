@@ -14,7 +14,7 @@ import os, random
 # dots that would look like STOP signs
 stop_data = cv2.CascadeClassifier('misc/opencv/bin/cascade/cascade.xml')
 
-video_name = '2022-03-28_22-24-34.mp4'
+video_name = '2022-03-28_22-21-55.mp4'
 cap = cv2.VideoCapture('img/raw/'+video_name)
 if (cap.isOpened() == False):
     print("Error opening video stream or file")
@@ -51,7 +51,7 @@ while(cap.isOpened()):
 
         cv2.imshow('Unprocessed', img_rgb)
 
-        key = cv2.waitKey(240)
+        key = cv2.waitKey(5)
         if (key == ord('q')):
             break
 
