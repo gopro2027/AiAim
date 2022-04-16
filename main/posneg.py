@@ -8,13 +8,15 @@ import os
 from time import time
 import imageio as iio
 
-frame_skip_count = 2
+frame_skip_count = 1
 frame_start = 0
-video_name = '2022-03-29_10-23-19.mp4'
+video_name = '2022-04-15_23-14-08.mp4'
+
+postdir_name = 'img/positive/'+str(video_name)
 
 lastLoc = ""
 if not os.path.exists('img/positive/'+str(video_name)):
-    os.mkdir('img/positive/'+str(video_name))
+    os.mkdir(postdir_name)
 if not os.path.exists('img/negative/'):
     os.mkdir('img/negative/')
 
@@ -31,6 +33,7 @@ for i in range(frame_start):
 
 while(cap.isOpened()):
     ret, frame = cap.read()
+    frameCount = frameCount + 1
     for i in range(frame_skip_count-1):
         ret, frame = cap.read()
         if ret != True:
